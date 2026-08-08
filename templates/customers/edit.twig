@@ -1,0 +1,22 @@
+{% extends "layout.twig" %}
+
+{% set isEdit = customer.id is not empty %}
+
+{% block title %}
+    {% if isEdit %}{{ customer.name }}{% else %}Add customer{% endif %}
+{% endblock %}
+
+{% block content %}
+    {% if isEdit %}
+        <h2 class="m-0">
+            {{ customer.name }}
+        </h2>
+    <div class="spacer-10"></div>
+    {% endif %}
+
+    <div class="row" id="entity-profile">
+        <div class="col-md-6">
+            {% include "customers/edit-form.twig" %}
+        </div>
+    </div>
+{% endblock %}

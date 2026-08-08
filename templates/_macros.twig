@@ -1,0 +1,46 @@
+{% macro alerts() %}
+    {% for messageType, messages in app.flashes %}
+        {% set isWarning = messageType == 'warning' %}
+        {% if messageType == 'error' %}
+            {% set messageType = 'danger' %}
+        {% endif %}
+        {% for message in messages %}
+            <div class="alert alert-{{ messageType }} {% if isWarning %}alert-dismissible{% endif %}">
+                {% if isWarning %}
+                    <button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
+                {% endif %}
+                {{ message|raw }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+    <div class="clear"></div>
+{% endmacro alerts %}
+
+{% macro alert_label_inline() %}
+    {% for messageType, messages in app.flashes %}
+        {% if messageType == 'error' %}
+            {% set messageType = 'danger' %}
+        {% endif %}
+        {% for message in messages %}
+            &nbsp;
+            {% set className = message|raw|length > 20 ? 'alert' : 'badge' %}
+            {% set subClassName = message|raw|length > 20 ? 'alert' : 'bg' %}
+            <span class="{{ className }} {{ subClassName }}-{{ messageType }}">
+                {{- message|raw -}}
+            </span>
+        {% endfor %}
+    {% endfor %}
+{% endmacro alert_label_inline %}
+
+{% macro shell_output(process, output) %}
+    <div class="alert alert-{{ process.isSuccessful() ? 'success' : 'danger' }}">
+        {% set output = output|default ? output : process_output(process) %}
+        {% if output %}
+            {{ output|raw }}
+        {% endif %}
+
+        {% if not process.isSuccessful() %}
+            Error: [0x{{ process.getExitCode()|dechex }}] ({{ process.getExitCodeText() }})
+        {% endif %}
+    </div>
+{% endmacro shell_output %}

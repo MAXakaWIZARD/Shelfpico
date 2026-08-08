@@ -1,0 +1,15 @@
+{% extends "layout.twig" %}
+
+{% block title %}
+    {% if setting.id is not empty %}Edit setting {{ setting.name }}{% else %}Add setting{% endif %}
+{% endblock %}
+
+{% block content %}
+    <div class="row"
+         id="entity-profile"
+    >
+        <div class="col-md-6">
+            {% include "settings/edit-form.twig" %}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,25 @@
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    locale: en
+    log_level: warning
+
+    product_images_subdir: '/media/products'
+
+    database_host: "%env(DATABASE_HOST)%"
+    database_port: "%env(DATABASE_PORT)%"
+    database_name: "%env(DATABASE_NAME)%"
+    database_user: "%env(DATABASE_USER)%"
+    database_password: "%env(DATABASE_PASSWORD)%"
+    database_server_version: "%env(DATABASE_SERVER_VERSION)%"
+
+    bin.mysqldump: "%env(BIN_MYSQLDUMP)%"
+    bin.mysql: "%env(BIN_MYSQL)%"
+    bin.gzip: "%env(BIN_GZIP)%"
+    bin.php: "%env(BIN_PHP)%"
+
+    paths.public: "%kernel.project_dir%/public"
+    paths.stocks_export: "%env(PATH_BACKUP)%"
+    paths.product_images: "%paths.public%%product_images_subdir%"
+    paths.db_dumps: "%env(PATH_BACKUP)%/db"
+    paths.db_backups: "%env(PATH_BACKUP)%/db-backups"

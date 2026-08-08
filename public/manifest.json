@@ -1,0 +1,15 @@
+{
+  "short_name": "Shelfpico",
+  "name": "Shelfpico Warehouse",
+  "icons": [
+    {
+      "src":"icon-32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "http://shelfpico",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "display": "standalone"
+}

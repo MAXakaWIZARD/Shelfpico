@@ -1,0 +1,12 @@
+<div class="alert alert-{{ process.isSuccessful() ? 'success' : 'danger' }}">
+    {% if output is not defined %}
+        {% set output = process_output(process) %}
+    {% endif %}
+    {% if output %}
+        {{ output|raw }}
+    {% endif %}
+
+    {% if not process.isSuccessful() %}
+        Error: [0x{{ process.getExitCode()|dechex }}] ({{ process.getExitCodeText() }})
+    {% endif %}
+</div>

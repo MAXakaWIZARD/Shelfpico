@@ -1,0 +1,95 @@
+{% import '_macros.twig' as macros %}
+{% set isEdit = restock.id is not empty %}
+<div class="card">
+    <div class="card-header">
+        <span class="fas fa-{{ isEdit ? 'pencil' : 'plus' }}"></span>
+        &nbsp;{{ isEdit ? 'Edit' : 'Add' }} restock
+        {{ macros.alert_label_inline() }}
+    </div>
+    <div class="card-body">
+        {{ form_start(form) }}
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <div class="input-group">
+                        {{ form_label(form.createdAt) }}
+                        {{ form_widget(form.createdAt) }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-12">
+                    <div class="input-group">
+                        {{ form_label(form.product) }}
+                        {{ form_widget(form.product) }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <div class="input-group">
+                        {{ form_label(form.quantity) }}
+                        {{ form_widget(form.quantity) }}
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="input-group">
+                        {{ form_label(form.price) }}
+                        {{ form_widget(form.price) }}
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="input-group">
+                        {{ form_label(form.amount) }}
+                        {{ form_widget(form.amount) }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-12">
+                    <div class="input-group">
+                        {{ form_label(form.note) }}
+                        {{ form_widget(form.note) }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-12">
+                    <div class="input-group">
+                        {{ form_label(form.url) }}
+                        {{ form_widget(form.url) }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="spacer-5"></div>
+
+            {{ form_widget(form.id) }}
+
+            <div class="row mb-0">
+                <div class="col-md-3">
+                    <button class="btn btn-{{ isEdit ? 'primary' : 'success' }}" type="submit">
+                        {{ isEdit ? 'Save' : 'Add' }}
+                    </button>
+                </div>
+                <div class="col-md-3 offset-md-6">
+                    {% if isEdit %}
+                        <button class="btn btn-danger float-end"
+                                type="button"
+                                v-ajax-delete
+                                data-url="{{ path('restocks.delete', {id: restock.id}) }}"
+                                data-redirect="{{ path('restocks') }}"
+                        >
+                            <span class="fas fa-xmark"></span> Delete
+                        </button>
+                    {% endif %}
+                </div>
+            </div>
+        {{ form_end(form) }}
+    </div>
+</div>

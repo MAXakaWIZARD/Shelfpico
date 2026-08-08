@@ -1,0 +1,59 @@
+{% import '_macros.twig' as macros %}
+{% set isEdit = tag.id is not empty %}
+<div class="card">
+    <div class="card-header">
+        <span class="fas fa-{{ isEdit ? 'pencil' : 'plus' }}"></span>
+        &nbsp;{{ isEdit ? 'Edit' : 'Add' }} tag
+        {{ macros.alert_label_inline() }}
+        {% if isEdit and tag.createdAt %}
+            <div class="float-end f14" title="Created at">
+                <span class="fas fa-plus-circle"></span> {{ tag.createdAt|date('Y-m-d H:i') }}
+            </div>
+        {% endif %}
+    </div>
+    <div class="card-body">
+        {{ form_start(form) }}
+            <div class="row mb-3">
+                <div class="col-md-12">
+                    <div class="input-group">
+                        {{ form_label(form.title) }}
+                        {{ form_widget(form.title) }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-12">
+                    <div class="input-group">
+                        {{ form_label(form.color) }}
+                        {{ form_widget(form.color) }}
+                    </div>
+                </div>
+            </div>
+
+            {{ form_widget(form.id) }}
+
+            <div class="row mb-0">
+                <div class="col-md-3">
+                    <button class="btn btn-{{ isEdit ? 'primary' : 'success' }}" type="submit">
+                        {{ isEdit ? 'Save' : 'Add' }}
+                    </button>
+                </div>
+
+                {% if isEdit %}
+                <div class="col-md-3 offset-md-6">
+                    <button
+                        class="btn btn-danger float-end"
+                        type="button"
+                        v-ajax-delete
+                        data-url="{{ path('tags.delete', {id: tag.id}) }}"
+                        data-redirect="{{ path('tags') }}"
+                    >
+                        <span class="fas fa-xmark"></span> Delete
+                    </button>
+                </div>
+                {% endif %}
+            </div>
+        {{ form_end(form) }}
+    </div>
+</div>

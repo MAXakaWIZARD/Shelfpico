@@ -1,0 +1,84 @@
+{% import '_macros.twig' as macros %}
+{% set isEdit = customer.id is not empty %}
+<div class="card">
+    <div class="card-header">
+        <span class="fas fa-{{ isEdit ? 'pencil' : 'plus' }}"></span>
+        &nbsp;{{ isEdit ? 'Edit' : 'Add' }} customer
+        {{ macros.alert_label_inline() }}
+        {% if isEdit and customer.createdAt %}
+            <div class="float-end f14" title="Created at">
+                <span class="fas fa-plus-circle"></span> {{ customer.createdAt|date('Y-m-d H:i') }}
+            </div>
+        {% endif %}
+    </div>
+    <div class="card-body">
+        {{ form_start(form) }}
+            <div class="row mb-3">
+                <div class="col-md-12">
+                    <div class="input-group">
+                        {{ form_label(form.name) }}
+                        {{ form_widget(form.name) }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-12">
+                    <div class="input-group">
+                        {{ form_label(form.phone) }}
+                        {{ form_widget(form.phone) }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-12">
+                    <div class="input-group">
+                        {{ form_label(form.shipmentInfo) }}
+                        {{ form_widget(form.shipmentInfo) }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <div class="input-group">
+                        {{ form_label(form.deposit) }}
+                        {{ form_widget(form.deposit) }}
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="input-group">
+                        {{ form_label(form.debt) }}
+                        {{ form_widget(form.debt) }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="spacer-5"></div>
+
+            {{ form_widget(form.id) }}
+
+            <div class="row mb-0">
+                <div class="col-md-3">
+                    <button class="btn btn-{{ isEdit ? 'primary' : 'success' }}" type="submit">
+                        {{ isEdit ? 'Save' : 'Add' }}
+                    </button>
+                </div>
+                <div class="col-md-3 offset-md-6">
+                    {% if isEdit %}
+                        <button class="btn btn-danger float-end"
+                                type="button"
+                                v-ajax-delete
+                                data-url="{{ path('customers.delete', {id: customer.id}) }}"
+                                data-redirect="{{ path('customers') }}"
+                        >
+                            <span class="fas fa-xmark"></span> Delete
+                        </button>
+                    {% endif %}
+                </div>
+            </div>
+        {{ form_end(form) }}
+    </div>
+</div>

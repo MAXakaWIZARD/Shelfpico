@@ -1,0 +1,4 @@
+parameters:
+    log_level: warning
+    database_name: "%env(DATABASE_NAME)%"
+    app.cache_model_photos: false

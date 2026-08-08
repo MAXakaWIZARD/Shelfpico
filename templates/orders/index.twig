@@ -1,0 +1,33 @@
+{% import '_macros.twig' as macros %}
+{% extends "layout.twig" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+    <h1>
+        {{ title }}
+        <span class="badge bg-secondary">{{ orders|length }}</span>
+        {% if customer|default %}
+        <a
+            class="btn btn-sm"
+            href="{{ path('customers.edit', {id: customer.id}) }}"
+            target="_blank"
+            title="Edit customer"
+        >
+            <span class="fas fa-user"></span>
+        </a>
+        {% endif %}
+        <a
+            class="btn btn-success btn-sm"
+            href="{{ path('orders.add') }}"
+            title="Add"
+        >
+            <span class="fas fa-plus"></span>
+        </a>
+    </h1>
+
+    {% include "orders/list-block.twig" with {
+        showTotals: true,
+        showCustomer: customer|default ? false : true
+    } %}
+{% endblock %}

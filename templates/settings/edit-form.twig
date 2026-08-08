@@ -1,0 +1,72 @@
+{% import '_macros.twig' as macros %}
+{% set isEdit = setting.id is not empty %}
+<div class="card">
+    <div class="card-header">
+        <span class="fas fa-{{ isEdit ? 'pencil' : 'plus' }}"></span>
+        &nbsp;{{ isEdit ? 'Edit' : 'Add' }} setting
+        {{ macros.alert_label_inline() }}
+    </div>
+    <div class="card-body">
+        {{ form_start(form) }}
+            <div class="row mb-3">
+                <div class="col-md-12">
+                    <div class="input-group">
+                        {{ form_label(form.name) }}
+                        {{ form_widget(form.name) }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-12">
+                    <div class="input-group">
+                        {{ form_label(form.description) }}
+                        {{ form_widget(form.description) }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-12">
+                    <div class="input-group">
+                        {{ form_label(form.type) }}
+                        {{ form_widget(form.type) }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-12">
+                    <div class="input-group">
+                        {{ form_label(form.value) }}
+                        {{ form_widget(form.value) }}
+                    </div>
+                </div>
+            </div>
+
+            {{ form_widget(form.id) }}
+
+            <div class="row mb-0">
+                <div class="col-md-9">
+                    <button class="btn btn-{{ isEdit ? 'primary' : 'success' }}" type="submit">
+                        {{ isEdit ? 'Save' : 'Add' }}
+                    </button>
+                </div>
+
+                {% if isEdit %}
+                <div class="col-md-3">
+                    <button
+                        class="btn btn-danger float-end"
+                        type="button"
+                        v-ajax-delete
+                        data-url="{{ path('settings.delete', {id: setting.id}) }}"
+                        data-redirect="{{ path('settings') }}"
+                    >
+                        <span class="fas fa-xmark"></span> Delete
+                    </button>
+                </div>
+                {% endif %}
+            </div>
+        {{ form_end(form) }}
+    </div>
+</div>

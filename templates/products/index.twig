@@ -1,0 +1,16 @@
+{% import '_macros.twig' as macros %}
+{% extends "layout.twig" %}
+
+{% block title %}{{ title|default('Products') }}{% endblock %}
+
+{% block content %}
+    <h1>
+        {{ title|default('Products') }}
+        <span class="badge bg-secondary">{{ products|length }}</span>
+        <a class="btn btn-success btn-sm" href="{{ path('products.add') }}" title="Add">
+            <span class="fas fa-plus"></span>
+        </a>
+    </h1>
+
+    {% include "products/list-block.twig" %}
+{% endblock %}

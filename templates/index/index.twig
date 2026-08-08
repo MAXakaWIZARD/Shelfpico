@@ -1,0 +1,15 @@
+{% extends "layout.twig" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-12 col-xl-9">
+            <h1 class="mt-0">In stock:</h1>
+            {% include "products/list-block.twig" %}
+        </div>
+        <div class="d-none d-xl-block col-xl-3 pt-5">
+            {% include "index/stats.twig" %}
+        </div>
+    </div>
+{% endblock %}

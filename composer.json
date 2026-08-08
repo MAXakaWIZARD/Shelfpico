@@ -1,0 +1,147 @@
+{
+    "name": "maxakawizard/shelfpico",
+    "description": "Homegrown tiny shop engine",
+    "type": "project",
+    "license": "MIT",
+    "minimum-stability": "stable",
+    "authors": [
+        {
+            "name": "MAXakaWIZARD",
+            "email": "maxakawizard@gmail.com"
+        }
+    ],
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        }
+    ],
+    "require": {
+        "php": ">=8.5",
+        "ext-gd": "*",
+        "ext-json": "*",
+        "ext-pdo": "*",
+        "beberlei/doctrineextensions": "~1.0",
+        "doctrine/doctrine-bundle": "~3.0",
+        "doctrine/doctrine-migrations-bundle": "~4.0",
+        "doctrine/orm": "~3.3",
+        "oomphinc/composer-installers-extender": "~2.0",
+        "php-units-of-measure/php-units-of-measure": "~2.0",
+        "symfony/asset": "~7.4",
+        "symfony/browser-kit": "~7.4",
+        "symfony/config": "~7.4",
+        "symfony/console": "~7.4",
+        "symfony/debug-bundle": "~7.4",
+        "symfony/dependency-injection": "~7.4",
+        "symfony/event-dispatcher": "~7.4",
+        "symfony/expression-language": "~7.4",
+        "symfony/flex": "~2.0",
+        "symfony/form": "~7.4",
+        "symfony/framework-bundle": "~7.4",
+        "symfony/http-client": "~7.4",
+        "symfony/http-foundation": "~7.4",
+        "symfony/http-kernel": "~7.4",
+        "symfony/intl": "~7.4",
+        "symfony/maker-bundle": "~1.50",
+        "symfony/mime": "~7.4",
+        "symfony/monolog-bundle": "~4.0",
+        "symfony/process": "~7.4",
+        "symfony/routing": "~7.4",
+        "symfony/runtime": "~7.4",
+        "symfony/security-bundle": "~7.4",
+        "symfony/twig-bundle": "~7.4",
+        "symfony/validator": "~7.4",
+        "symfony/var-dumper": "~7.4",
+        "symfony/webpack-encore-bundle": "~2.0",
+        "symfony/yaml": "~7.4",
+        "twig/twig": "~3.0"
+    },
+    "require-dev": {
+        "symfony/dotenv": "~7.4",
+        "squizlabs/php_codesniffer": "~4.0",
+        "phpcompatibility/php-compatibility": "~10.0@dev",
+        "codeception/codeception": "~5.2",
+        "codeception/module-asserts": "~3.0",
+        "codeception/module-phpbrowser": "~4.0",
+        "codeception/module-cli": "~2.0",
+        "codeception/module-filesystem": "~3.0",
+        "behat/gherkin": "~4.6",
+        "symfony/stopwatch": "~7.4",
+        "symfony/web-profiler-bundle": "~7.4"
+    },
+    "config": {
+        "preferred-install": {
+            "*": "dist"
+        },
+        "sort-packages": true,
+        "platform": {
+            "php": "8.5.2"
+        },
+        "allow-plugins": {
+            "composer/installers": true,
+            "oomphinc/composer-installers-extender": true,
+            "symfony/flex": true,
+            "symfony/runtime": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "App\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "npm-i": "npm i",
+        "npm-encore-dev": "npm run dev",
+        "npm-encore-watch": "npm run watch",
+        "auto-scripts": {
+            "cache:clear --no-warmup": "symfony-cmd",
+            "cache:clear --env=test --no-warmup": "symfony-cmd",
+            "cache:warmup": "symfony-cmd",
+            "cache:warmup --env=test": "symfony-cmd",
+            "assets:install --symlink --relative %PUBLIC_DIR%": "symfony-cmd"
+        },
+        "post-install-cmd": [
+            "@auto-scripts",
+            "@npm-i",
+            "@npm-encore-dev"
+        ],
+        "post-update-cmd": [
+            "@auto-scripts",
+            "@npm-i",
+            "@npm-encore-dev"
+        ],
+        "phpcs": "phpcs",
+        "phpcbf": "phpcbf",
+        "codecept": "codecept run",
+        "coverage": "codecept run --coverage --coverage-xml --coverage-html",
+        "composer-validate": "composer validate --strict",
+        "lint-sf": [
+            "bin/console lint:container",
+            "bin/console lint:twig templates",
+            "bin/console lint:yaml config src translations",
+            "bin/console doctrine:schema:validate"
+        ],
+        "tests": [
+            "@composer-validate",
+            "@lint-sf",
+            "@phpcs",
+            "@codecept"
+        ]
+    },
+    "conflict": {
+        "symfony/symfony": "*"
+    },
+    "extra": {
+        "symfony": {
+            "id": "01BZACDPTMHBEMM2019220N1T3",
+            "allow-contrib": true,
+            "require": "~7.4"
+        }
+    }
+}

@@ -1,0 +1,42 @@
+<ul class="tags-list">
+{% set routeName = route|default('search') %}
+{% if routeName == 'tags' %}
+    {% set routeName = 'search' %}
+{% endif %}
+
+{% if tags is not defined %}
+    {% set tags = get_tags() %}
+{% endif %}
+
+{% for tag in tags %}
+    <li id="tag-row-{{ tag.id }}" data-tag-id="{{ tag.id }}" data-tag-title="{{ tag.title }}">
+        <a class="f14 badge bg-{{ searchTag.id|default ? (searchTag.id|default == tag.id ? 'primary' : 'secondary') : tag.color.value }}"
+           href="{{ path(routeName, routeParams|merge({tag: tag.id})) }}"
+           {% if not searchInSamePage|default %} target="_blank" {% endif %}
+        >
+            {{ tag.title }}
+        </a>
+
+        {% if showRemoveLinks|default %}
+        <input type="hidden" id="entity_tag_{{ tag.id }}" name="tag_ids[]" value="{{ tag.id }}"/>
+        <span class="fas fa-xmark" title="Remove tag"></span>
+        {% endif %}
+
+        {% if showEditControls|default %}
+        <a class="btn btn-sm px-0"
+              href="{{ path('tags.edit', {id: tag.id}) }}"
+              title="Edit tag">
+            <span class="fas fa-pencil"></span>
+        </a>
+        <a class="btn btn-sm px-0 delete-link"
+           title="Delete tag"
+           v-ajax-delete
+           data-url="{{ path('tags.delete', {id: tag.id}) }}"
+           data-delete-element-id="tag-row-{{ tag.id }}"
+        >
+            <span class="fas fa-xmark"></span>
+        </a>
+        {% endif %}
+    </li>
+{% endfor %}
+</ul>

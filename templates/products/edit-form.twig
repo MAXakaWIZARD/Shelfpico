@@ -1,0 +1,114 @@
+{% import '_macros.twig' as macros %}
+{% set isEdit = product.id is not empty %}
+<div class="card">
+    <div class="card-header">
+        <span class="fas fa-{{ isEdit ? 'pencil' : 'plus' }}"></span>
+        &nbsp;{{ isEdit ? 'Edit' : 'Add' }} product
+        {{ macros.alert_label_inline() }}
+        {% if isEdit and product.createdAt %}
+            <div class="float-end f14" title="Created at">
+                <span class="fas fa-plus-circle"></span> {{ product.createdAt|date('Y-m-d H:i') }}
+            </div>
+        {% endif %}
+    </div>
+    <div class="card-body">
+        {{ form_start(form) }}
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <div class="input-group">
+                        {{ form_label(form.sku) }}
+                        {{ form_widget(form.sku) }}
+                    </div>
+                </div>
+
+                <div class="col-md-9">
+                    <div class="input-group">
+                        {{ form_label(form.title) }}
+                        {{ form_widget(form.title) }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-12">
+                    <div class="input-group">
+                        {{ form_label(form.url) }}
+                        {{ form_widget(form.url) }}
+                        <a class="btn btn-outline-secondary" href="{{ product.url }}" target="_blank">
+                            <span class="fas fa-arrow-right" title="Go to vendor website"></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-12">
+                    <div class="input-group">
+                        {{ form_label(form.atomicUrl) }}
+                        {{ form_widget(form.atomicUrl) }}
+                        <a class="btn btn-outline-secondary" href="{{ product.atomicUrl }}" target="_blank">
+                            <span class="fas fa-arrow-right" title="Go to supplier website"></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-7">
+                    <div class="input-group">
+                        {{ form_label(form.photo) }}
+                        {{ form_widget(form.photo) }}
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    {% if product.salePriceUah > 0 %}
+                        Buy: {{ product.buyPriceUah|format_price }}<br/>
+                        Profit: {{ product.profitUah|format_price }}
+                    {% endif %}
+                </div>
+                <div class="col-md-3">
+                    <div class="input-group">
+                        {{ form_label(form.supplierSalePriceUah) }}
+                        {{ form_widget(form.supplierSalePriceUah) }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="clear"></div>
+            <entity-tags-editor
+                :entity-tags='{{ product.tags.toArray()|json_encode|raw }}'
+                :tags='{{ get_tags()|json_encode|raw }}'
+            ></entity-tags-editor>
+
+            <div class="spacer-5"></div>
+
+            {{ form_widget(form.id) }}
+
+            <div class="row mb-0">
+                <div class="col-md-3">
+                    <button class="btn btn-{{ isEdit ? 'primary' : 'success' }}" type="submit">
+                        {{ isEdit ? 'Save' : 'Add' }}
+                    </button>
+                </div>
+                <div class="col-md-2 offset-md-4">
+                    <div class="form-check">
+                        {{ form_widget(form.popular) }}
+                        {{ form_label(form.popular) }}
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    {% if isEdit %}
+                        <button class="btn btn-danger float-end"
+                                type="button"
+                                v-ajax-delete
+                                data-url="{{ path('products.delete', {id: product.id}) }}"
+                                data-redirect="{{ path('products') }}"
+                        >
+                            <span class="fas fa-xmark"></span> Delete
+                        </button>
+                    {% endif %}
+                </div>
+            </div>
+        {{ form_end(form) }}
+    </div>
+</div>

@@ -1,0 +1,45 @@
+{% import '_macros.twig' as macros %}
+{% extends "layout.twig" %}
+
+{% block title %}{{ title|default('Settings') }}{% endblock %}
+
+{% block content %}
+    <h1>
+        {{ title|default('Settings') }}
+        <span class="badge bg-secondary">{{ settings|length }}</span>
+        <a class="btn btn-success btn-sm" href="{{ path('settings.add') }}" title="Add">
+            <span class="fas fa-plus"></span>
+        </a>
+    </h1>
+
+    <table class="std-table" style="width: auto;">
+        <tr>
+            <th style="width: 20px;">ID</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Type</th>
+            <th>Value</th>
+        </tr>
+        {% for setting in settings %}
+            <tr>
+                <td>{{ setting.id }}</td>
+                <td>
+                    <a href="{{ path('settings.edit', {id: setting.id}) }}"
+                       title="Edit setting"
+                    >
+                        {{ setting.name }}
+                    </a>
+                </td>
+                <td>
+                    {{ setting.description }}
+                </td>
+                <td>
+                    {{ setting.type.value }}
+                </td>
+                <td>
+                    {{ setting.value }}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

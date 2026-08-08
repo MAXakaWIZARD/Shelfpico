@@ -1,0 +1,27 @@
+{% import '_macros.twig' as macros %}
+{% extends "layout.twig" %}
+
+{% block content %}
+    <h1>Database import</h1>
+    <h4>
+        Current DB version: <div class="label label-primary">{{ currentVersion }}</div>
+        {% set upToDate = currentVersion == latestVersion %}
+        {% if upToDate %}
+            <div class="label label-success">UP TO DATE</div>
+        {% else %}
+            <div class="label label-warning">OUTDATED</div>
+            {% if dryRun and process.isSuccessful() %}
+                <a href="{{ path('db.import', {force: 1}) }}" class="btn btn-danger">Run import</a>
+            {% endif %}
+        {% endif %}
+        <div class="spacer-10"></div>
+        Latest DB version: <div class="label label-warning">{{ latestVersion }}</div>
+    </h4>
+
+    {{ macros.shell_output(process) }}
+
+    {% if dryRun and process.isSuccessful() %}
+        <div class="clear"></div>
+        <a href="{{ path('db.import', {force: 1}) }}" class="btn btn-danger">{{ upToDate ? 'Run import anyway' : 'Run import' }}</a>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends "layout.twig" %}
+
+{% block title %}Tags{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-6">
+            {% include('tags/edit-panel.twig') %}
+        </div>
+    </div>
+{% endblock %}

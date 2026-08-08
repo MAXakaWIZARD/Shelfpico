@@ -1,0 +1,59 @@
+{% import '_macros.twig' as macros %}
+{% extends "layout.twig" %}
+
+{% block title %}{{ title|default('Restocks') }}{% endblock %}
+
+{% block content %}
+    <h1>
+        {{ title|default('Restocks') }}
+        <span class="badge bg-secondary">{{ restocks|length }}</span>
+        <a class="btn btn-success btn-sm" href="{{ path('restocks.add') }}" title="Add">
+            <span class="fas fa-plus"></span>
+        </a>
+    </h1>
+
+    <table class="std-table" style="width: auto;">
+        <tr>
+            <th style="width: 20px;">ID</th>
+            <th>Date</th>
+            <th>SKU</th>
+            <th>Product</th>
+            <th>Qty</th>
+            <th>Price</th>
+            <th>Amount</th>
+            <th>Note</th>
+        </tr>
+        {% for restock in restocks %}
+            <tr>
+                <td>{{ restock.id }}</td>
+                <td>
+                    <a href="{{ path('restocks.edit', {id: restock.id}) }}"
+                       title="Edit restock"
+                    >
+                        {{ restock.createdAt|date('Y-m-d H:i') }}
+                    </a>
+                </td>
+                <td>{{ restock.product.sku }}</td>
+                <td>
+                    <a href="{{ path('products.edit', {id: restock.product.id}) }}"
+                       title="Edit product"
+                    >
+                        {{ restock.product.title }}
+                    </a>
+                </td>
+                <td class="text-right">{{ restock.quantity }}</td>
+                <td class="text-right">{{ restock.price | format_price }}</td>
+                <td class="text-right">{{ restock.amount | format_price }}</td>
+                <td>
+                    {% if restock.url %}
+                        <a href="{{ restock.url }}" target="_blank">
+                            {{ restock.note }}
+                        </a>
+                    {% else %}
+                        {{ restock.note }}
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

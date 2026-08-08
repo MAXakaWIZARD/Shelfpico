@@ -1,0 +1,8 @@
+{% for tagStat in tagsStats %}
+    <a class="d-inline-block f14 mb-5 mr-5 badge bg-{{ tagStat.color }}"
+       href="{{ path('search', {tag: tagStat.id}) }}"
+       target="_blank"
+    >
+        {{ tagStat.title }} - {{ tagStat.cnt }}
+    </a>
+{% endfor %}

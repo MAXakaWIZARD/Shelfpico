@@ -1,0 +1,10 @@
+{% import '_macros.twig' as macros %}
+{% extends "layout.twig" %}
+
+{% block content %}
+    {% if showHeader|default %}
+        <h1>{{ pageTitle }}</h1>
+    {% endif %}
+
+    {{ macros.shell_output(process) }}
+{% endblock %}

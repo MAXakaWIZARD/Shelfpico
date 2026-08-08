@@ -1,0 +1,47 @@
+{% import '_macros.twig' as macros %}
+{% extends "layout.twig" %}
+
+{% block title %}Search ({{ products|length }}){% endblock %}
+{% block body_class %}search-page{% endblock %}
+
+{% block content %}
+    <h1>
+        Search results&nbsp;
+        {%- if searchParams.tag -%}
+            for tag
+            <a
+                class="badge bg-success no-decoration"
+                href="{{ path('tags.edit', {id: searchParams.tag.id}) }}"
+                title="Edit tag"
+            >
+                {{ searchParams.tag.title }}
+            </a>
+        {%- elseif searchParams.term -%}
+            for term "{{ searchParams.term }}"
+        {%- endif -%}
+
+        &nbsp;
+        <span class="badge bg-secondary">{{ products|length }}</span>
+    </h1>
+
+    {% if searchParams.tag %}
+    <div class="clear"></div>
+    <div class="card mb-5">
+        <div class="card-body p-5">
+            {% include('partials/tags-list.twig') with {
+                searchInSamePage: true,
+                searchTag: searchParams.tag
+            } %}
+        </div>
+    </div>
+    {% endif %}
+
+    {% if products|length > 0 %}
+        <div class="row">
+            <div class="col-md-12">
+                {% include "products/list-block.twig" %}
+            </div>
+        </div>
+    {% endif %}
+
+{% endblock %}

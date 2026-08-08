@@ -1,0 +1,14 @@
+{% import '_macros.twig' as macros %}
+{% extends "layout.twig" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+    <h1>{{ title }}</h1>
+
+    {% if data|length %}
+        {% include "orders/aggregated-list.twig" %}
+    {% else %}
+        Good news, you shipped everything!
+    {% endif %}
+{% endblock %}

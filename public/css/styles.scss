@@ -1,0 +1,238 @@
+@use 'spacing';
+@use 'helpers';
+
+body {
+    position: relative;
+}
+
+a {
+    color: #555;
+
+    &:hover {
+      text-decoration: none;
+    }
+}
+
+.std-table {
+    margin: 0;
+    border: none;
+
+    th {
+        background: #ccc;
+        font-weight: bold;
+        text-align: left;
+        padding: 10px 10px;
+        border-left: none;
+        border-top: none;
+        border-bottom: 1px solid #ddd;
+        border-right: 1px solid #fff;
+
+        &:first-child {
+            border-top-left-radius: 10px;
+        }
+
+        &:last-child {
+            border-top-right-radius: 10px;
+        }
+    }
+
+    tr:last-child {
+        td:first-child {
+            border-bottom-left-radius: 10px;
+        }
+
+        td:last-child {
+            border-bottom-right-radius: 10px;
+        }
+    }
+
+    td {
+        background-color: #fff;
+        padding: 10px 10px;
+        border-left: 1px solid #ddd;
+        border-bottom: 1px solid #ddd;
+        vertical-align: top;
+    }
+
+    td:last-child {
+        border-right: 1px solid #ddd;
+    }
+
+    tr:nth-child(odd) td {
+        background-color: #eee;
+    }
+
+    .list-group {
+        @extend .mb-0;
+
+        .list-group-item {
+            border-color: #333;
+            background-color: #fff;
+
+            &:nth-child(odd) {
+                background-color: #eee;
+            }
+        }
+    }
+}
+
+.receipt-subtable {
+    border: none;
+
+    td {
+        border: 1px solid #ddd;
+    }
+}
+
+#search-form {
+    input[name="term"] {
+        width: 250px;
+    }
+}
+
+.scrollable-menu {
+    height: auto;
+    max-height: 323px;
+    overflow-x: hidden;
+}
+
+.navbar-brand {
+    box-sizing: content-box;
+    padding: 10px 0 0 10px;
+    width: 32px;
+    height: 32px;
+    img {
+        max-width: 32px;
+    }
+}
+
+.tags-list {
+    list-style-type: none;
+    padding: 0;
+    margin-bottom: 0;
+
+    li {
+        display: inline-block;
+        margin-right: 5px;
+        margin-bottom: 5px;
+
+        a.badge {
+            display: inline-block;
+            padding: 5px 7px;
+            @extend .f12;
+            text-decoration: none;
+        }
+
+        .fa-xmark {
+            cursor: pointer;
+            top: 3px;
+        }
+
+        .delete-link {
+            .fa-xmark {
+                top: 1px;
+            }
+        }
+    }
+}
+
+label.fas, label.fa {
+    display: flex;
+}
+
+label.input-group-text {
+    &.fas,
+    &.far {
+        min-width: 16px;
+        box-sizing: content-box;
+    }
+}
+
+.navbar {
+    min-height: 0 !important;
+    @extend .mb-0;
+}
+
+#top-menu {
+    > li.nav-item {
+        > a.nav-link {
+            @extend .px-10;
+            @extend .pt-10;
+            @extend .pb-0;
+            @extend .f20;
+            color: #d1233d;
+
+            &:hover {
+                color: #f00;
+            }
+        }
+
+        &:first-child a {
+            @extend .pl-0;
+        }
+    }
+
+    .dropdown-menu {
+        li a,
+        .dropdown-item {
+            @extend .px-10;
+
+            span.fas,
+            span.fa {
+                @extend .mr-10;
+            }
+        }
+    }
+
+    .dropdown-submenu {
+        position: relative;
+    }
+
+    .dropdown-submenu .dropdown-menu {
+        top: 0;
+        left: 100%;
+        margin-top: -1px;
+    }
+}
+
+#content {
+    padding-top: 65px;
+
+    h1 {
+        @extend .mt-0;
+        @extend .mb-5;
+        @extend .f24;
+    }
+}
+
+.alert {
+    @extend .mb-5;
+    @extend .py-5;
+}
+
+.form-inline {
+    .form-group {
+        margin-right: 5px;
+
+        &:last-of-type {
+            margin-right: 0;
+        }
+    }
+}
+
+// Bootstrap 5 removed .btn-xs - adding it back
+.btn-xs {
+    padding: 0.125rem 0.25rem;
+    font-size: 0.75rem;
+    line-height: 1.5;
+    border-radius: 0.2rem;
+}
+
+.badge:hover {
+    cursor: default;
+}
+
+a.badge:hover {
+    cursor: pointer;
+    text-decoration: none;
+}

@@ -1,0 +1,27 @@
+{% extends "layout.twig" %}
+
+{% set isEdit = product.id is not empty %}
+
+{% block title %}
+    {% if isEdit %}{{ product.sku ~ ' ' ~ product.title }}{% else %}Add product{% endif %}
+{% endblock %}
+
+{% block content %}
+    {% if isEdit %}
+        <h2 class="m-0">
+            {{ product.title }}
+        </h2>
+    <div class="spacer-10"></div>
+    {% endif %}
+
+    <div class="row" id="entity-profile">
+        <div class="col-md-5">
+            {% include "products/edit-form.twig" %}
+        </div>
+        <div class="col-md-6 pl-0">
+            {% if isEdit %}
+                {% include "products/sidebar.twig" %}
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

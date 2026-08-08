@@ -1,0 +1,71 @@
+{% import '_macros.twig' as macros %}
+{% if products is not empty %}
+    <table class="std-table" style="width: 100%;">
+        <tr>
+            <th style="width: 20px;">ID</th>
+            <th>SKU</th>
+            <th>Title</th>
+            <th>Stock</th>
+            <th>Sold</th>
+            <th title="Last buy">Lbuy</th>
+            <th>Buy</th>
+            <th>Sale</th>
+            <th>Profit</th>
+            <th>Links</th>
+        </tr>
+        {% for product in products %}
+            <tr>
+                <td>{{ product.id }}</td>
+                <td>{{ product.sku }}</td>
+                <td>
+                    <a href="{{ path('products.edit', {id: product.id}) }}"
+                       title="Edit product"
+                       {% if product.hasPhoto %}
+                        data-cover-url="{{ get_product_photo_url(product) }}"
+                       {% endif %}
+                    >
+                        {{ product.title }}
+                    </a>
+                    {% if product.popular %}
+                        &nbsp;<span class="fas fa-star" title="Popular"></span>
+                    {% endif %}
+                </td>
+                <td class="text-center">
+                    {% set labelClass = 'success' %}
+                    {% if product.needsRestock %}
+                        {% set labelClass = 'danger' %}
+                    {% elseif product.quantity < 5 %}
+                        {% set labelClass = 'warning' %}
+                    {% elseif product.quantity < 10 %}
+                        {% set labelClass = 'primary' %}
+                    {% endif %}
+                    <a href="{{ path('restocks.product', {id: product.id}) }}"
+                       title="Restocks"
+                    >
+                        <span class="d-inline-block badge bg-{{ labelClass }} w30">{{ product.quantity }}</span>
+                    </a>
+                </td>
+                <td class="text-right">
+                    <a href="{{ path('orders.product', {id: product.id}) }}"
+                       title="Orders"
+                    >
+                        {{ product.totalSoldQuantity }}
+                    </a>
+                </td>
+                <td class="text-right">{{ product.lastBuyPriceUah > 0 ? product.lastBuyPriceUah|format_price : 'N/A' }}</td>
+                <td class="text-right">{{ product.buyPriceUah|format_price }}</td>
+                <td class="text-right">{{ product.salePriceUah|format_price }}</td>
+                <td class="text-right">{{ (product.profitUah)|format_price }}</td>
+                <td>
+                    <a class="btn p-0" href="{{ product.url }}" target="_blank" title="{{ product.url }}">
+                        <span class="fa fa-link"></span>
+                    </a>
+                    &nbsp;
+                    <a class="btn p-0" href="{{ product.atomicUrl }}" target="_blank" title="{{ product.atomicUrl }}">
+                        <span class="fa fa-cube"></span>
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endif %}

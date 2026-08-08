@@ -1,0 +1,13 @@
+{% import '_macros.twig' as macros %}
+{% extends "layout.twig" %}
+
+{% block content %}
+    <h1>Database backup</h1>
+
+    {{ macros.shell_output(process) }}
+
+    {% if dryRun and process.isSuccessful() %}
+        <div class="clear"></div>
+        <a href="{{ path('db.backup', {force: 1}) }}" class="btn btn-success">Run backup</a>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends "layout.twig" %}
+
+{% block title %}Environment check{% endblock %}
+
+{% block content %}
+    <h1>Environment check</h1>
+
+    <div class="alert alert-secondary">
+        <table class="table table-sm">
+            {% for key, value in env %}
+            <tr>
+                <td><strong>{{ key }}:</strong></td>
+                <td>{{ value }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        <small class="text-muted">
+            Current environment: <strong>{{ env.APP_ENV }}</strong>
+            (loaded from .env and {{ env.APP_ENV == 'test' ? '.env.test.local' : '.env.local' }})
+        </small>
+    </div>
+{% endblock %}
+

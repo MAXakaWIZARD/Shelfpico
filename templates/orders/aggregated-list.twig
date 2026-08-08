@@ -1,0 +1,100 @@
+<table class="std-table" style="width: auto;">
+    <tr>
+        <th>Date</th>
+        <th>Customer</th>
+        <th>Phone</th>
+        <th>Shipment</th>
+        <th colspan="4">Order</th>
+        <th class="w80">Amount</th>
+        {% if showProfit|default %}
+        <th class="w80">Profit</th>
+        {% endif %}
+        <th>Flags</th>
+        <th>Receipt</th>
+    </tr>
+    {% for key, item in data %}
+    <tr>
+        <td>
+            {{ item.orders[0].createdAt|date('Y-m-d') }}
+        </td>
+        <td>
+            <a href="{{ path('customers.edit', {id: item.customer.id}) }}"
+               title="Edit customer"
+               target="_blank"
+            >
+                {{ item.customer.name }}
+            </a>
+        </td>
+        <td>{{ item.customer.phone }}</td>
+        <td>{{ item.customer.shipmentInfo }}</td>
+        <td>
+        {% for order in item.orders %}
+            <a href="{{ path('orders.edit', {id: order.id}) }}"
+               title="Edit order #{{ order.id }}"
+               target="_blank"
+            >
+                #{{ order.id }}
+            </a>
+            <br/>
+        {% endfor %}
+        </td>
+        <td>
+        {% for order in item.orders %}
+            <a href="{{ path('orders.edit', {id: order.id}) }}"
+               title="Edit order #{{ order.id }}"
+               target="_blank"
+            >
+                {{ order.quantity }}x
+            </a>
+            <br/>
+        {% endfor %}
+        </td>
+        <td class="text-right">
+        {% for order in item.orders %}
+            <a href="{{ path('orders.edit', {id: order.id}) }}"
+               title="Edit order #{{ order.id }}"
+               target="_blank"
+            >
+                {{ order.price | format_price }}
+            </a>
+            <br/>
+        {% endfor %}
+        </td>
+        <td>
+        {% for order in item.orders %}
+            <a href="{{ path('products.edit', {id: order.product.id}) }}"
+               title="Edit product"
+               target="_blank"
+            >
+                {{ order.product.isTuningPart ? '' : order.product.sku ~ ' ' }}
+                {{ order.receiptTitle }}
+            </a>
+
+            = {{ order.amount | format_price }}
+            <br/>
+        {% endfor %}
+        </td>
+        <td>{{ item.totalAmount | format_price }}</td>
+        {% if showProfit|default %}
+        <td>{{ item.totalProfit | format_price }}</td>
+        {% endif %}
+        <td>
+            <span title="Paid" class="fas fa-dollar-sign {{ item.paid ? 'color-green' : 'color-red'}}"></span>
+            <span title="Shipped" class="fas fa-truck {{ item.shipped ? 'color-green' : 'color-red'}}"></span>
+        </td>
+        <td>
+            <a href="{{ path('orders.receipt', {key: key, lang: 'UA'}) }}"
+               target="_blank"
+            >
+                UA
+            </a>
+            &nbsp;
+            <a href="{{ path('orders.receipt', {key: key, lang: 'EN'}) }}"
+               target="_blank"
+            >
+                EN
+            </a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>

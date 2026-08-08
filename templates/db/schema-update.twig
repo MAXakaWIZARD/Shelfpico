@@ -1,0 +1,13 @@
+{% import '_macros.twig' as macros %}
+{% extends "layout.twig" %}
+
+{% block content %}
+    <h1>Database schema update</h1>
+
+    {{ macros.shell_output(process, output) }}
+
+    {% if dryRun and process.isSuccessful() %}
+        <div class="clear"></div>
+        <a href="{{ path('db.schema-update', {force: 1}) }}" class="btn btn-danger">Update schema</a>
+    {% endif %}
+{% endblock %}

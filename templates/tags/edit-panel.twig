@@ -1,0 +1,16 @@
+<div class="card">
+    <div class="card-header">
+        <span class="fas fa-tags"></span>&nbsp;&nbsp;Tags
+        <span class="badge bg-secondary">{{ get_tags()|length }}</span>
+        <a class="btn btn-success btn-xs" href="{{ path('tags.add') }}" title="Add">
+            <span class="fas fa-plus"></span>
+        </a>
+    </div>
+    <div class="card-body">
+        {% include('partials/tags-list.twig') with {
+            route: 'search',
+            showEditControls: true,
+            searchInSamePage: true,
+        } %}
+    </div>
+</div>

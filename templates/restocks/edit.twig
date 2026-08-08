@@ -1,0 +1,22 @@
+{% extends "layout.twig" %}
+
+{% set isEdit = restock.id is not empty %}
+
+{% block title %}
+    {% if isEdit %}Restock #{{ restock.id }}{% else %}Add restock{% endif %}
+{% endblock %}
+
+{% block content %}
+    {% if isEdit %}
+        <h2 class="m-0">
+            Restock #{{ restock.id }}
+        </h2>
+    <div class="spacer-10"></div>
+    {% endif %}
+
+    <div class="row" id="entity-profile">
+        <div class="col-md-6">
+            {% include "restocks/edit-form.twig" %}
+        </div>
+    </div>
+{% endblock %}

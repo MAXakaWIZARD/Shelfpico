@@ -1,0 +1,104 @@
+<nav
+    class="navbar navbar-expand-sm navbar-light bg-light fixed-top border-bottom"
+    role="navigation"
+>
+    <div class="container-fluid">
+        {% if get_parameter('kernel.environment') == 'test' %}
+        <p class="navbar-text my-0 ml-0">
+            <span class="badge bg-danger">!!! TEST !!!</span>
+        </p>
+        {% endif %}
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div
+            id="navbarSupportedContent"
+            class="collapse navbar-collapse"
+        >
+            <ul
+                id="top-menu"
+                class="navbar-nav"
+            >
+                <li class="nav-item"><a href="{{ path('home') }}" class="nav-link" title="Dashboard"><span class="fa fa-dashboard"></span></a></li>
+                <li class="nav-item"><a href="{{ path('orders.shipment') }}" class="nav-link" title="Orders to ship"><span class="fas fa-truck"></span></a></li>
+                <li class="nav-item"><a href="{{ path('orders.aggregated') }}" class="nav-link" title="Orders aggregated"><span class="fas fa-file-invoice-dollar"></span></a></li>
+                <li class="nav-item"><a href="{{ path('orders') }}" class="nav-link" title="Orders"><span class="fas fa-dollar-sign"></span></a></li>
+                <li class="nav-item"><a href="{{ path('restocks') }}" class="nav-link" title="Restocks"><span class="fas fa-th-large"></span></a></li>
+                <li class="nav-item"><a href="{{ path('products') }}" class="nav-link" title="Products"><span class="fas fa-cube"></span></a></li>
+                <li class="nav-item"><a href="{{ path('customers') }}" class="nav-link" title="Customers"><span class="fas fa-user"></span></a></li>
+                <li class="nav-item"><a href="{{ path('tags') }}" class="nav-link" title="Tags"><span class="fas fa-tags"></span></a></li>
+                <li class="nav-item dropdown">
+                    <a href="javascript:void(0)" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" title="Add">
+                        <span class="fas fa-plus"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{ path('orders.add') }}" class="dropdown-item"><span class="fas fa-dollar-sign"></span> Order</a></li>
+                        <li><a href="{{ path('restocks.add') }}" class="dropdown-item"><span class="fas fa-th-large"></span> Restock</a></li>
+                        <li><a href="{{ path('products.add') }}" class="dropdown-item"><span class="fas fa-cube"></span> Product</a></li>
+                        <li><a href="{{ path('customers.add') }}" class="dropdown-item"><span class="fas fa-user"></span> Customer</a></li>
+                        <li><a href="{{ path('tags.add') }}" class="dropdown-item"><span class="fas fa-tags"></span> Tag</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a href="javascript:void(0)" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" title="Utils">
+                        <span class="fas fa-cogs"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{ path('products.update-stocks') }}" class="dropdown-item">
+                            <span class="fas fa-arrows-rotate"></span> Update stocks
+                        </a></li>
+                        <li><a href="{{ path('settings') }}" class="dropdown-item">
+                            <span class="fas fa-cogs"></span> Settings
+                        </a></li>
+                        <li><a href="{{ path('env.check') }}" class="dropdown-item">
+                            <span class="fas fa-circle-info"></span> Env check
+                        </a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a href="{{ path('db.schema-update') }}" target="_blank" class="dropdown-item">
+                            <span class="fas fa-arrows-rotate"></span> Update DB schema
+                        </a></li>
+                        <li><a href="{{ path('db.backup', {force: 1}) }}" target="_blank" class="dropdown-item">
+                            <span class="fas fa-floppy-disk"></span> Backup DB
+                        </a></li>
+                        <li><a href="{{ path('db.import') }}" target="_blank" class="dropdown-item">
+                            <span class="fas fa-folder-open"></span> Import DB
+                        </a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <form
+            id="search-form"
+            class="d-flex ms-auto my-5 d-sm-none d-md-flex"
+            action="{{ path('search') }}"
+            method="post"
+        >
+            <div class="input-group">
+                <input
+                    type="text"
+                    name="term"
+                    class="form-control form-control-sm"
+                    placeholder="Search"
+                    value="{{ searchParams.term|default }}"
+                />
+                <button
+                    class="btn btn-outline-secondary btn-sm"
+                    type="submit"
+                    title="Search in same tab"
+                >
+                    <span class="fas fa-arrow-down"></span>
+                </button>
+                <button
+                    class="btn btn-outline-secondary btn-sm"
+                    type="button"
+                    v-submit-in-new-tab
+                    title="Search in new tab"
+                >
+                    <span class="fas fa-arrow-right"></span>
+                </button>
+            </div>
+        </form>
+    </div>
+</nav>

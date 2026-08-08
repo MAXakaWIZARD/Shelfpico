@@ -1,0 +1,42 @@
+paths:
+    tests: tests
+    data: tests/_data
+    log: tests/_output
+    output: tests/_output
+    helpers: tests/_support
+
+settings:
+    colors: true
+    memory_limit: 1024M
+    backup_globals: false
+    log: true
+
+coverage:
+    enabled: true
+    remote: false
+    include:
+        - src/*
+    exclude:
+        - src/Migrations/*
+
+suites:
+    unit:
+        path: ./unit
+        bootstrap: _bootstrap.php
+        actor: UnitTester
+        modules:
+            enabled:
+                - Asserts
+    acceptance:
+        path: ./acceptance
+        bootstrap: _bootstrap.php
+        actor: AcceptanceTester
+        modules:
+            enabled:
+                - PhpBrowser
+                - Cli
+                - Filesystem
+            config:
+                PhpBrowser:
+                    url: 'http://shelfpico-test'
+                    timeout: 300

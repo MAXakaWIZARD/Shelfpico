@@ -1,0 +1,15 @@
+{% extends "layout.twig" %}
+
+{% block content %}
+    {% if showHeader|default %}
+        <h1>{{ pageTitle }}</h1>
+    {% endif %}
+
+    {% if message is not defined %}
+        {% set message = isSuccessful|default ? 'OK' : 'Error' %}
+    {% endif %}
+
+    <div class="alert alert-{{ isSuccessful|default ? 'success' : 'danger' }}">
+        {{ message }}
+    </div>
+{% endblock %}

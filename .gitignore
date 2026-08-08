@@ -1,0 +1,26 @@
+.bashrc
+
+*.log
+
+/public/media/
+
+codeception.yml
+/tests/_output
+/tests/_support/_generated
+
+###> symfony/framework-bundle ###
+/.env.local
+/.env.*.local
+/var/
+/vendor/
+/config/reference.php
+###< symfony/framework-bundle ###
+
+###> symfony/webpack-encore-bundle ###
+/node_modules/
+/public/build/
+###< symfony/webpack-encore-bundle ###
+
+###> squizlabs/php_codesniffer ###
+/.phpcs-cache
+###< squizlabs/php_codesniffer ###

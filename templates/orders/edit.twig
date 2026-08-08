@@ -1,0 +1,22 @@
+{% extends "layout.twig" %}
+
+{% set isEdit = order.id is not empty %}
+
+{% block title %}
+    {% if isEdit %}Order #{{ order.id }}{% else %}Add order{% endif %}
+{% endblock %}
+
+{% block content %}
+    {% if isEdit %}
+        <h2 class="m-0">
+            Order #{{ order.id }}
+        </h2>
+    <div class="spacer-10"></div>
+    {% endif %}
+
+    <div class="row" id="entity-profile">
+        <div class="col-md-6">
+            {% include "orders/edit-form.twig" %}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,80 @@
+{% import '_macros.twig' as macros %}
+{% extends "layout.twig" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+    <h1>{{ lang == 'UA' ? 'Замовлення' : 'Order' }}</h1>
+
+    {% if data %}
+        <table class="std-table" style="width: auto;">
+        <tr>
+            <td>{{ lang == 'UA' ? 'Дата' : 'Date' }}</td>
+            <td>
+                {{ data.orders[0].createdAt|date('d.m.Y') }}
+            </td>
+        </tr>
+        <tr>
+            <td>{{ lang == 'UA' ? 'Клієнт' : 'Client' }}</td>
+            <td>
+                <a href="{{ path('customers.edit', {id: data.customer.id}) }}"
+                   title="Edit customer"
+                   target="_blank"
+                >
+                    {{ data.customer.name }}
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td>{{ lang == 'UA' ? 'Телефон' : 'Phone' }}</td>
+            <td>
+                {{ data.customer.phone }}
+            </td>
+        </tr>
+        <tr>
+            <td>{{ lang == 'UA' ? 'Доставка' : 'Shipment' }}</td>
+            <td>
+                {{ data.customer.shipmentInfo }}
+            </td>
+        </tr>
+        <tr>
+            <td>{{ lang == 'UA' ? 'Товар' : 'Products' }}</td>
+            <td>
+                <table class="receipt-subtable">
+                    {% for order in data.orders %}
+                    <tr>
+                        <td>
+                            <a href="{{ path('orders.edit', {id: order.id}) }}"
+                               title="Edit order #{{ order.id }}"
+                               target="_blank"
+                            >
+                                {{ order.quantity }}x
+                            </a>
+                        </td>
+                        <td class="text-right">{{ order.price | format_price }}</td>
+                        <td>
+                            <a href="{{ path('products.edit', {id: order.product.id}) }}"
+                               title="Edit product"
+                               target="_blank"
+                            >
+                                {{ order.product.isTuningPart ? '' : order.product.sku ~ ' ' }}
+                                {{ order.receiptTitle }}
+                            </a>
+                        </td>
+                        <td class="text-right">{{ order.amount | format_price }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>{{ lang == 'UA' ? 'Сума до сплати, грн' : 'Total, UAH' }}</td>
+            <td class="text-right pr-20">
+                {{ data.totalAmount | format_price }}
+            </td>
+        </tr>
+        </table>
+    {% else %}
+        Order not found
+    {% endif %}
+{% endblock %}
