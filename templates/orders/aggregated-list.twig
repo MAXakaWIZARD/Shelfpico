@@ -26,7 +26,9 @@
             </a>
         </td>
         <td>{{ item.customer.phone }}</td>
-        <td>{{ item.customer.shipmentInfo }}</td>
+        <td class="w150">
+            {{ item.customer.shipmentInfo }}
+        </td>
         <td>
         {% for order in item.orders %}
             <a href="{{ path('orders.edit', {id: order.id}) }}"
