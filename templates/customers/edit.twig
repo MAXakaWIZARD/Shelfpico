@@ -10,6 +10,9 @@
     {% if isEdit %}
         <h2 class="m-0">
             {{ customer.name }}
+            <a class="btn btn-primary btn-sm" href="{{ path('orders.customer', {id: customer.id}) }}" title="Orders">
+                <span class="fas fa-dollar-sign"></span>
+            </a>
         </h2>
     <div class="spacer-10"></div>
     {% endif %}
