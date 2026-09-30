@@ -4,7 +4,7 @@
         <th>Customer</th>
         <th>Phone</th>
         <th>Shipment</th>
-        <th colspan="4">Order</th>
+        <th colspan="5">Order</th>
         <th class="w80">Amount</th>
         {% if showProfit|default %}
         <th class="w80">Profit</th>
@@ -76,13 +76,32 @@
             <br/>
         {% endfor %}
         </td>
+        <td class="w50 px-0">
+        {% for order in item.orders %}
+            {% if not order.paid %}
+                <span title="Not paid" class="fas fa-dollar-sign color-red"></span>
+            {% endif %}
+            {% if not order.shipped %}
+                <span title="Not shipped" class="fas fa-truck color-red"></span>
+            {% endif %}
+            <br/>
+        {% endfor %}
+        </td>
         <td>{{ item.totalAmount | format_price }}</td>
         {% if showProfit|default %}
         <td>{{ item.totalProfit | format_price }}</td>
         {% endif %}
         <td>
-            <span title="Paid" class="fas fa-dollar-sign {{ item.paid ? 'color-green' : 'color-red'}}"></span>
-            <span title="Shipped" class="fas fa-truck {{ item.shipped ? 'color-green' : 'color-red'}}"></span>
+            <a href="{{ path('orders.mark-paid', {key: key}) }}"
+               title="Mark all as paid"
+            >
+                <span class="fas fa-dollar-sign {{ item.paid ? 'color-green' : 'color-red'}}"></span>
+            </a>
+            <a href="{{ path('orders.mark-shipped', {key: key}) }}"
+               title="Mark all as shipped"
+            >
+                <span class="fas fa-truck {{ item.shipped ? 'color-green' : 'color-red'}}"></span>
+            </a>
         </td>
         <td>
             <a href="{{ path('orders.receipt', {key: key, lang: 'UA'}) }}"

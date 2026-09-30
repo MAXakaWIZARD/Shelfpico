@@ -8,6 +8,7 @@ use App\Entity\Customer;
 use App\Entity\Order;
 use App\Entity\Product;
 use App\Form\OrderForm;
+use App\Repo\OrdersRepo;
 use App\Repo\ProductsRepo;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,10 +19,7 @@ use Symfony\Component\Routing\Attribute\Route;
  */
 class OrdersController extends AbstractController
 {
-    /**
-     * @var Order
-     */
-    protected $entity;
+    protected ?Order $entity = null;
 
     #[Route("/orders", name: "orders")]
     public function indexAction(): Response
@@ -57,13 +55,47 @@ class OrdersController extends AbstractController
     #[Route("/orders/receipt/{key}", name: "orders.receipt")]
     public function receiptAction(string $key, Request $request): Response
     {
-        $orders = $this->getRepo(Order::class)->findByKey($key);
+        /** @var OrdersRepo $repo */
+        $repo = $this->getRepo(Order::class);
+        $orders = $repo->findByKey($key);
 
         return $this->render('orders/receipt.twig', [
             'title' => 'Receipt',
             'data' => $this->aggregateOrders($orders)[$key] ?? [],
             'lang' => $request->query->get('lang') ?? 'EN',
         ]);
+    }
+    
+    #[Route("/orders/mark-paid/{key}", name: "orders.mark-paid")]
+    public function markPaidAction(string $key): Response
+    {
+        /** @var OrdersRepo $repo */
+        $repo = $this->getRepo(Order::class);
+        $orders = $repo->findByKey($key);
+        
+        foreach ($orders as $order) {
+            $order->setPaid(true);
+        }
+        
+        $this->em->flush();
+
+        return $this->redirectToRoute('orders.aggregated');
+    }
+    
+    #[Route("/orders/mark-shipped/{key}", name: "orders.mark-shipped")]
+    public function markShippedAction(string $key): Response
+    {
+        /** @var OrdersRepo $repo */
+        $repo = $this->getRepo(Order::class);
+        $orders = $repo->findByKey($key);
+        
+        foreach ($orders as $order) {
+            $order->setShipped(true);
+        }
+        
+        $this->em->flush();
+
+        return $this->redirectToRoute('orders.aggregated');
     }
 
     /**
