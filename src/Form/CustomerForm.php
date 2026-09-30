@@ -7,11 +7,11 @@ namespace App\Form;
 use App\Entity\Customer;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\GreaterThan;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 class CustomerForm extends AbstractForm implements FormTypeInterface
@@ -38,7 +38,7 @@ class CustomerForm extends AbstractForm implements FormTypeInterface
                     'title' => 'Name',
                 ],
             ])
-            ->add('phone', TextType::class, [
+            ->add('phone', TelType::class, [
                 'label' => ' ',
                 'required' => true,
                 'constraints' => [
@@ -46,6 +46,8 @@ class CustomerForm extends AbstractForm implements FormTypeInterface
                 ],
                 'attr' => [
                     'class' => 'form-control',
+                    'placeholder' => '099 123 45 67',
+                    'pattern' => '[0-9]{3} [0-9]{3} [0-9]{2} [0-9]{2}',
                 ],
                 'label_attr' => [
                     'class' => 'input-group-text fas fa-phone',
