@@ -97,7 +97,9 @@
             {% endif %}
         </td>
         {% if showProfit|default %}
-        <td>{{ item.totalProfit | format_price }}</td>
+        <td class="text-right">
+            {{ item.totalProfit | format_price }}
+        </td>
         {% endif %}
         <td>
             <a href="{{ path('orders.mark-paid', {key: key}) }}"
