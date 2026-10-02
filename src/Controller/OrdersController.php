@@ -116,6 +116,8 @@ class OrdersController extends AbstractController
                     'orders' => [],
                     'paid' => true,
                     'shipped' => true,
+                    'totalPaid' => 0,
+                    'totalDue' => 0,
                     'totalAmount' => 0,
                     'totalProfit' => 0,
                 ];
@@ -124,6 +126,13 @@ class OrdersController extends AbstractController
             $record['orders'][] = $order;
             $record['paid'] = $record['paid'] && $order->isPaid();
             $record['shipped'] = $record['shipped'] && $order->isShipped();
+            
+            if ($order->isPaid()) {
+                $record['totalPaid'] += $order->getAmount();
+            } else {
+                $record['totalDue'] += $order->getAmount();
+            }
+            
             $record['totalAmount'] += $order->getAmount();
             $record['totalProfit'] += $order->getProfit();
 

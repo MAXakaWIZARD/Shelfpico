@@ -87,7 +87,15 @@
             <br/>
         {% endfor %}
         </td>
-        <td>{{ item.totalAmount | format_price }}</td>
+        <td class="text-right">
+            {{ item.totalAmount | format_price }}
+            {% if item.totalPaid > 0 and item.totalPaid < item.totalAmount %}
+                <br/><span class="color-green">{{ item.totalPaid | format_price }}</span>
+            {% endif %}
+            {% if item.totalDue > 0 %}
+                <br/><span class="color-red">{{ item.totalDue | format_price }}</span>
+            {% endif %}
+        </td>
         {% if showProfit|default %}
         <td>{{ item.totalProfit | format_price }}</td>
         {% endif %}
